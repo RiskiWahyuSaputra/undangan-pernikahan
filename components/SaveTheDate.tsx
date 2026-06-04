@@ -1,45 +1,42 @@
 "use client";
 
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion } from "framer-motion";
 import { Calendar, Clock, MapPin, Shirt, Heart, ChevronRight } from "lucide-react";
-import { useRef } from "react";
+
+const containerVariants = {
+  hidden: {},
+  visible: {
+    transition: {
+      staggerChildren: 0.08,
+      delayChildren: 0.1,
+    },
+  },
+};
 
 const cardVariants = {
-  hidden: { opacity: 0, y: 40 },
-  visible: (i: number) => ({
+  hidden: { opacity: 0 },
+  visible: {
     opacity: 1,
-    y: 0,
-    transition: { duration: 0.6, delay: 0.1 + i * 0.1, ease: [0.25, 0.46, 0.45, 0.94] },
-  }),
+    transition: { duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] },
+  },
 };
 
 const SaveTheDate = () => {
-  const sectionRef = useRef<HTMLDivElement>(null);
-
-  const { scrollYProgress } = useScroll({
-    target: sectionRef,
-    offset: ["start end", "end start"],
-  });
-
-  const blob1Y = useTransform(scrollYProgress, [0, 1], [40, -40]);
-  const blob2Y = useTransform(scrollYProgress, [0, 1], [-30, 30]);
-  const blob3Y = useTransform(scrollYProgress, [0, 1], [60, -20]);
-
   return (
-    <section ref={sectionRef} className="bg-ivory py-24 md:py-32 px-4 md:px-6 relative z-20 overflow-hidden">
-      {/* Background decorative elements with parallax */}
-      <motion.div style={{ y: blob1Y }} className="absolute top-0 right-0 w-72 h-72 md:w-96 md:h-96 bg-rose/5 rounded-full blur-3xl pointer-events-none" />
-      <motion.div style={{ y: blob2Y }} className="absolute bottom-0 left-0 w-56 h-56 md:w-80 md:h-80 bg-gold/5 rounded-full blur-3xl pointer-events-none" />
-      <motion.div style={{ y: blob3Y }} className="absolute top-1/3 left-1/4 w-32 h-32 bg-sage/5 rounded-full blur-2xl pointer-events-none" />
+    <section className="bg-ivory py-24 md:py-32 px-4 md:px-6 relative z-20 overflow-hidden">
+      {/* Background decorative elements */}
+      <div className="absolute top-0 right-0 w-72 h-72 md:w-96 md:h-96 bg-rose/5 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute bottom-0 left-0 w-56 h-56 md:w-80 md:h-80 bg-gold/5 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute top-1/3 left-1/4 w-32 h-32 bg-sage/5 rounded-full blur-2xl pointer-events-none" />
 
       <div className="max-w-6xl mx-auto relative z-10">
         {/* Header */}
         <div className="text-center mb-16 md:mb-24">
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 1, ease: [0.25, 0.46, 0.45, 0.94] }}
           >
             <span className="font-sans text-rose uppercase tracking-[0.5em] text-[10px] md:text-sm mb-4 block font-medium">
               Join Us
@@ -55,14 +52,16 @@ const SaveTheDate = () => {
           </motion.div>
         </div>
 
-        {/* Cards Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-4 md:grid-rows-2 gap-4 md:gap-6">
+        {/* Cards Grid — animated together as a group */}
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-60px" }}
+          variants={containerVariants}
+          className="grid grid-cols-1 md:grid-cols-4 md:grid-rows-2 gap-4 md:gap-6"
+        >
           {/* Date Card */}
           <motion.div
-            custom={0}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
             variants={cardVariants}
             className="md:col-span-2 md:row-span-1 bg-white/60 backdrop-blur-xl border border-white/40 rounded-3xl md:rounded-[2.5rem] p-8 md:p-12 flex flex-col justify-center items-center text-center group hover:bg-white/80 transition-all duration-500 shadow-sm hover:shadow-lg"
           >
@@ -86,10 +85,6 @@ const SaveTheDate = () => {
 
           {/* Time Card */}
           <motion.div
-            custom={1}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
             variants={cardVariants}
             className="md:col-span-1 md:row-span-1 bg-white/60 backdrop-blur-xl border border-white/40 rounded-3xl md:rounded-[2.5rem] p-8 md:p-10 flex flex-col justify-center items-center text-center group hover:bg-white/80 transition-all duration-500 shadow-sm hover:shadow-lg"
           >
@@ -117,10 +112,6 @@ const SaveTheDate = () => {
 
           {/* Dress Code Card */}
           <motion.div
-            custom={2}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
             variants={cardVariants}
             className="md:col-span-1 md:row-span-2 bg-white/60 backdrop-blur-xl border border-white/40 rounded-3xl md:rounded-[2.5rem] p-8 md:p-10 flex flex-col justify-center items-center text-center group hover:bg-white/80 transition-all duration-500 shadow-sm hover:shadow-lg"
           >
@@ -166,10 +157,6 @@ const SaveTheDate = () => {
 
           {/* Venue Card */}
           <motion.div
-            custom={3}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
             variants={cardVariants}
             className="md:col-span-3 md:row-span-1 bg-white/60 backdrop-blur-xl border border-white/40 rounded-3xl md:rounded-[2.5rem] p-8 md:p-12 flex flex-col md:flex-row items-start justify-between relative overflow-hidden group hover:bg-white/80 transition-all duration-500 shadow-sm hover:shadow-lg"
           >
@@ -206,7 +193,7 @@ const SaveTheDate = () => {
             <div className="absolute -right-12 md:-right-16 -bottom-12 md:-bottom-16 w-36 md:w-48 h-36 md:h-48 bg-rose/5 rounded-full blur-2xl group-hover:bg-rose/10 transition-colors duration-500 pointer-events-none" />
             <div className="absolute -right-4 md:-right-8 -bottom-4 md:-bottom-8 w-16 md:w-24 h-16 md:h-24 bg-gold/5 rounded-full blur-xl pointer-events-none" />
           </motion.div>
-        </div>
+        </motion.div>
       </div>
     </section>
   );
