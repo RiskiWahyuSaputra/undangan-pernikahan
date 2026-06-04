@@ -4,12 +4,23 @@ import React, { useEffect, useRef, useState } from "react";
 import { useScroll, useTransform, useMotionValueEvent, motion } from "framer-motion";
 
 const TOTAL_FRAMES = 242;
-const MOBILE_TOTAL_FRAMES = 60;
+const MOBILE_FRAME_COUNT = 60; // preload 60 images, spread across all 242 frames
+
+// Build array of which frame files to load: evenly spaced across TOTAL_FRAMES
+// e.g. for 60 frames across 242: load frame 1, 5, 9, 13... (every 4th)
+const getMobileFrameIndices = (): number[] => {
+  const indices: number[] = [];
+  const step = TOTAL_FRAMES / MOBILE_FRAME_COUNT;
+  for (let i = 0; i < MOBILE_FRAME_COUNT; i++) {
+    indices.push(Math.round(1 + i * step));
+  }
+  return indices;
+};
 
 export default function SequenceScroll({ onLoad }: { onLoad?: () => void }) {
   const containerRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const imagesRef = useRef<HTMLImageElement[]>([]);
+  const imagesRef = useRef<Map<number, HTMLImageElement>>(new Map());
   const [imagesLoaded, setImagesLoaded] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
 
@@ -20,15 +31,13 @@ export default function SequenceScroll({ onLoad }: { onLoad?: () => void }) {
     return () => window.removeEventListener("resize", check);
   }, []);
 
-  const totalFrames = isMobile ? MOBILE_TOTAL_FRAMES : TOTAL_FRAMES;
-
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start start", "end end"],
   });
 
-  // Map scroll progress (0-1) to frame index
-  const frameIndex = useTransform(scrollYProgress, [0, 1], [1, totalFrames]);
+  // Always map scroll to full 242 frames range
+  const frameIndex = useTransform(scrollYProgress, [0, 1], [1, TOTAL_FRAMES]);
 
   // Text Overlay Animations
   const opacity1 = useTransform(scrollYProgress, [0, 0.05, 0.15, 0.2], [0, 1, 1, 0]);
@@ -40,35 +49,50 @@ export default function SequenceScroll({ onLoad }: { onLoad?: () => void }) {
   const opacity3 = useTransform(scrollYProgress, [0.6, 0.65, 0.8, 0.9], [0, 1, 1, 0]);
   const y3 = useTransform(scrollYProgress, [0.6, 0.65, 0.8, 0.9], [20, 0, 0, -20]);
 
-  // Preload images
+  // Preload images — mobile loads 60 spread across 242, desktop loads all 242
   useEffect(() => {
     let loadedCount = 0;
-    const images: HTMLImageElement[] = [];
-    const framesToLoad = isMobile ? MOBILE_TOTAL_FRAMES : TOTAL_FRAMES;
+    const images = new Map<number, HTMLImageElement>();
+    const frameIndices = isMobile ? getMobileFrameIndices() : Array.from({ length: TOTAL_FRAMES }, (_, i) => i + 1);
+    const totalToLoad = frameIndices.length;
 
-    for (let i = 1; i <= framesToLoad; i++) {
+    for (const idx of frameIndices) {
       const img = new Image();
-      const frameNumber = i.toString().padStart(3, "0");
+      const frameNumber = idx.toString().padStart(3, "0");
       img.src = `/sequence/ezgif-frame-${frameNumber}.jpg`;
       img.onload = img.onerror = () => {
         loadedCount++;
-        if (loadedCount === framesToLoad) {
+        if (loadedCount === totalToLoad) {
           setImagesLoaded(true);
           onLoad?.();
         }
       };
-      images.push(img);
+      images.set(idx, img);
     }
     imagesRef.current = images;
   }, [isMobile]);
 
+  // Find nearest loaded frame for a given target index
+  const findNearestFrame = (target: number): HTMLImageElement | null => {
+    const images = imagesRef.current;
+    if (images.has(target)) return images.get(target)!;
+
+    // Search for nearest loaded frame
+    let offset = 1;
+    while (offset < TOTAL_FRAMES) {
+      if (images.has(target - offset)) return images.get(target - offset)!;
+      if (images.has(target + offset)) return images.get(target + offset)!;
+      offset++;
+    }
+    return null;
+  };
+
   const renderFrame = (index: number) => {
     const canvas = canvasRef.current;
     const ctx = canvas?.getContext("2d");
-    const img = imagesRef.current[index - 1];
+    const img = findNearestFrame(index);
 
     if (canvas && ctx && img) {
-      // Handle "cover" logic
       const canvasWidth = canvas.width;
       const canvasHeight = canvas.height;
       const imgWidth = img.width;
