@@ -55,17 +55,20 @@ undangan-pernikahan/
 ## Instalasi
 
 1. Clone repository:
+
 ```bash
 git clone https://github.com/RiskiWahyuSaputra/undangan-pernikahan.git
 cd undangan-pernikahan
 ```
 
 2. Install dependencies:
+
 ```bash
 npm install
 ```
 
 3. Jalankan development server:
+
 ```bash
 npm run dev
 ```
@@ -75,12 +78,14 @@ npm run dev
 ## Pengembangan
 
 ### Build untuk production:
+
 ```bash
 npm run build
 npm start
 ```
 
 ### Lint code:
+
 ```bash
 npm run lint
 ```
@@ -88,6 +93,7 @@ npm run lint
 ## Dokumentasi
 
 Dokumentasi lebih lengkap tersedia di folder `docs/`:
+
 - **Plans**: Roadmap dan perencanaan pengembangan
 - **Specs**: Spesifikasi desain dan fitur
 
