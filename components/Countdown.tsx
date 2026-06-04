@@ -106,18 +106,9 @@ const Countdown = () => {
             className="flex flex-col items-center"
           >
             <div className="relative w-16 md:w-32 h-20 md:h-40 bg-white/70 backdrop-blur-sm shadow-sm rounded-2xl flex items-center justify-center overflow-hidden border border-white/60 group hover:shadow-md transition-shadow duration-500">
-              <AnimatePresence mode="popLayout">
-                <motion.span
-                  key={unit.value}
-                  initial={{ y: "100%" }}
-                  animate={{ y: 0 }}
-                  exit={{ y: "-100%" }}
-                  transition={{ duration: 0.5, ease: [0.76, 0, 0.24, 1] }}
-                  className="font-serif text-4xl md:text-7xl text-neutral-800"
-                >
-                  {String(unit.value).padStart(2, "0")}
-                </motion.span>
-              </AnimatePresence>
+              <span className="font-serif text-4xl md:text-7xl text-neutral-800">
+                {String(unit.value).padStart(2, "0")}
+              </span>
               <div className="absolute inset-0 bg-gradient-to-b from-black/[0.02] to-transparent pointer-events-none" />
             </div>
             <span className="font-sans text-[10px] md:text-xs uppercase tracking-[0.3em] text-neutral-400 mt-4">

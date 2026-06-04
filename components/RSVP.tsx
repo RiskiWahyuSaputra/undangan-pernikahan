@@ -63,7 +63,7 @@ const RSVP = () => {
     const init = () => {
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
-      petals = Array.from({ length: 50 }, () => new Petal());
+      petals = Array.from({ length: 25 }, () => new Petal());
     };
 
     const animate = () => {
@@ -111,7 +111,7 @@ const RSVP = () => {
 
   return (
     <section id="rsvp" className="relative min-h-screen bg-ivory py-32 px-6 flex items-center justify-center overflow-hidden">
-      <canvas ref={canvasRef} className="absolute inset-0 pointer-events-none" />
+      <canvas ref={canvasRef} className="absolute inset-0 pointer-events-none opacity-60" />
 
       {/* Parallax decorative blobs */}
       <motion.div
@@ -130,7 +130,7 @@ const RSVP = () => {
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, margin: "-60px" }}
-        className="relative z-10 w-full max-w-2xl bg-white/40 backdrop-blur-xl border border-white/60 p-8 md:p-12 rounded-[3rem] shadow-xl"
+        className="relative z-10 w-full max-w-2xl bg-white/70 border border-white/60 p-8 md:p-12 rounded-[3rem] shadow-xl"
       >
         <motion.div
           initial={{ opacity: 0, y: 20 }}

@@ -71,10 +71,15 @@ export default function SequenceScroll({ onLoad }: { onLoad?: () => void }) {
     }
   };
 
-  // Update canvas on scroll
+  // Update canvas on scroll — throttle to avoid excessive redraws
+  const lastRenderedFrame = useRef(0);
   useMotionValueEvent(frameIndex, "change", (latest) => {
     if (imagesLoaded) {
-      renderFrame(Math.round(latest));
+      const rounded = Math.round(latest);
+      if (rounded !== lastRenderedFrame.current) {
+        lastRenderedFrame.current = rounded;
+        renderFrame(rounded);
+      }
     }
   });
 
@@ -99,10 +104,10 @@ export default function SequenceScroll({ onLoad }: { onLoad?: () => void }) {
 
   return (
     <div ref={containerRef} className="relative h-[500vh] w-full">
-      <div className="sticky top-0 h-screen w-full overflow-hidden">
+      <div className="sticky top-0 h-screen w-full overflow-hidden will-change-transform">
         <canvas
           ref={canvasRef}
-          className="h-full w-full object-cover"
+          className="h-full w-full object-cover will-change-contents"
         />
 
         {/* Text Overlays */}

@@ -23,7 +23,7 @@ const cardVariants = {
 
 const SaveTheDate = () => {
   return (
-    <section className="bg-ivory py-24 md:py-32 px-4 md:px-6 relative z-20 overflow-hidden">
+    <section className="bg-ivory py-24 md:py-32 px-4 md:px-6 relative z-20 overflow-hidden will-change-transform">
       {/* Background decorative elements */}
       <div className="absolute top-0 right-0 w-72 h-72 md:w-96 md:h-96 bg-rose/5 rounded-full blur-3xl pointer-events-none" />
       <div className="absolute bottom-0 left-0 w-56 h-56 md:w-80 md:h-80 bg-gold/5 rounded-full blur-3xl pointer-events-none" />
@@ -63,7 +63,7 @@ const SaveTheDate = () => {
           {/* Date Card */}
           <motion.div
             variants={cardVariants}
-            className="md:col-span-2 md:row-span-1 bg-white/60 backdrop-blur-xl border border-white/40 rounded-3xl md:rounded-[2.5rem] p-8 md:p-12 flex flex-col justify-center items-center text-center group hover:bg-white/80 transition-all duration-500 shadow-sm hover:shadow-lg"
+            className="md:col-span-2 md:row-span-1 bg-white/80 border border-white/60 rounded-3xl md:rounded-[2.5rem] p-8 md:p-12 flex flex-col justify-center items-center text-center group hover:bg-white/90 transition-colors duration-500 shadow-sm hover:shadow-lg"
           >
             <div className="absolute -top-4 -left-4 text-rose/[0.04] font-serif text-9xl leading-none select-none pointer-events-none">
               &ldquo;
@@ -86,7 +86,7 @@ const SaveTheDate = () => {
           {/* Time Card */}
           <motion.div
             variants={cardVariants}
-            className="md:col-span-1 md:row-span-1 bg-white/60 backdrop-blur-xl border border-white/40 rounded-3xl md:rounded-[2.5rem] p-8 md:p-10 flex flex-col justify-center items-center text-center group hover:bg-white/80 transition-all duration-500 shadow-sm hover:shadow-lg"
+            className="md:col-span-1 md:row-span-1 bg-white/80 border border-white/60 rounded-3xl md:rounded-[2.5rem] p-8 md:p-10 flex flex-col justify-center items-center text-center group hover:bg-white/90 transition-colors duration-500 shadow-sm hover:shadow-lg"
           >
             <Clock className="text-sage mb-5 md:mb-6 w-7 h-7 md:w-10 md:h-10 group-hover:rotate-12 transition-transform duration-500" />
             <div className="space-y-5 md:space-y-6 w-full">
@@ -113,7 +113,7 @@ const SaveTheDate = () => {
           {/* Dress Code Card */}
           <motion.div
             variants={cardVariants}
-            className="md:col-span-1 md:row-span-2 bg-white/60 backdrop-blur-xl border border-white/40 rounded-3xl md:rounded-[2.5rem] p-8 md:p-10 flex flex-col justify-center items-center text-center group hover:bg-white/80 transition-all duration-500 shadow-sm hover:shadow-lg"
+            className="md:col-span-1 md:row-span-2 bg-white/80 border border-white/60 rounded-3xl md:rounded-[2.5rem] p-8 md:p-10 flex flex-col justify-center items-center text-center group hover:bg-white/90 transition-colors duration-500 shadow-sm hover:shadow-lg"
           >
             <Shirt className="text-gold mb-5 md:mb-6 w-7 h-7 md:w-10 md:h-10 group-hover:scale-110 transition-transform duration-500" />
             <h3 className="font-serif text-2xl md:text-4xl text-neutral-800 mb-4 md:mb-6 font-medium">
@@ -158,7 +158,7 @@ const SaveTheDate = () => {
           {/* Venue Card — with embedded map */}
           <motion.div
             variants={cardVariants}
-            className="md:col-span-3 md:row-span-1 bg-white/60 backdrop-blur-xl border border-white/40 rounded-3xl md:rounded-[2.5rem] overflow-hidden group hover:bg-white/80 transition-all duration-500 shadow-sm hover:shadow-lg"
+            className="md:col-span-3 md:row-span-1 bg-white/80 border border-white/60 rounded-3xl md:rounded-[2.5rem] overflow-hidden group hover:bg-white/90 transition-colors duration-500 shadow-sm hover:shadow-lg"
           >
             <div className="flex flex-col md:flex-row h-full">
               {/* Venue Info */}

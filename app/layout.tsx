@@ -26,8 +26,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`${cormorant.variable} ${dmSans.variable}`}>
-      <body className="bg-ivory text-neutral-900 antialiased font-sans">
+    <html lang="en" className={`${cormorant.variable} ${dmSans.variable} !scroll-auto`}>
+      <body className="bg-ivory text-neutral-900 antialiased font-sans overflow-x-hidden">
         <SmoothScroll>{children}</SmoothScroll>
       </body>
     </html>

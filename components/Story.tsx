@@ -17,7 +17,7 @@ const Story = () => {
   return (
     <section
       ref={containerRef}
-      className="relative z-20 -mt-[100vh] min-h-[150vh] bg-ivory flex flex-col items-center justify-center px-6 py-32"
+      className="relative z-20 min-h-[150vh] bg-ivory flex flex-col items-center justify-center px-6 py-32"
     >
       <div className="max-w-4xl mx-auto text-center sticky top-1/4">
         <motion.div
