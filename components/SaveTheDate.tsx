@@ -1,7 +1,8 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
 import { Calendar, Clock, MapPin, Shirt, Heart, ChevronRight } from "lucide-react";
+import { useRef } from "react";
 
 const cardVariants = {
   hidden: { opacity: 0, y: 40 },
@@ -13,12 +14,23 @@ const cardVariants = {
 };
 
 const SaveTheDate = () => {
+  const sectionRef = useRef<HTMLDivElement>(null);
+
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start end", "end start"],
+  });
+
+  const blob1Y = useTransform(scrollYProgress, [0, 1], [40, -40]);
+  const blob2Y = useTransform(scrollYProgress, [0, 1], [-30, 30]);
+  const blob3Y = useTransform(scrollYProgress, [0, 1], [60, -20]);
+
   return (
-    <section className="bg-ivory py-24 md:py-32 px-4 md:px-6 relative z-20 overflow-hidden">
-      {/* Background decorative elements */}
-      <div className="absolute top-0 right-0 w-72 h-72 md:w-96 md:h-96 bg-rose/5 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute bottom-0 left-0 w-56 h-56 md:w-80 md:h-80 bg-gold/5 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute top-1/3 left-1/4 w-32 h-32 bg-sage/5 rounded-full blur-2xl pointer-events-none" />
+    <section ref={sectionRef} className="bg-ivory py-24 md:py-32 px-4 md:px-6 relative z-20 overflow-hidden">
+      {/* Background decorative elements with parallax */}
+      <motion.div style={{ y: blob1Y }} className="absolute top-0 right-0 w-72 h-72 md:w-96 md:h-96 bg-rose/5 rounded-full blur-3xl pointer-events-none" />
+      <motion.div style={{ y: blob2Y }} className="absolute bottom-0 left-0 w-56 h-56 md:w-80 md:h-80 bg-gold/5 rounded-full blur-3xl pointer-events-none" />
+      <motion.div style={{ y: blob3Y }} className="absolute top-1/3 left-1/4 w-32 h-32 bg-sage/5 rounded-full blur-2xl pointer-events-none" />
 
       <div className="max-w-6xl mx-auto relative z-10">
         {/* Header */}

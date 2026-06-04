@@ -90,77 +90,147 @@ const RSVP = () => {
     alert("Thank you for your RSVP, " + form.name + "!");
   };
 
+  const formVariants = {
+    hidden: { opacity: 0, y: 30 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] },
+    },
+  };
+
+  const fieldVariants = {
+    hidden: { opacity: 0, y: 20, scale: 0.97 },
+    visible: (i: number) => ({
+      opacity: 1,
+      y: 0,
+      scale: 1,
+      transition: { duration: 0.5, delay: 0.3 + i * 0.12, ease: [0.25, 0.46, 0.45, 0.94] },
+    }),
+  };
+
   return (
     <section id="rsvp" className="relative min-h-screen bg-ivory py-32 px-6 flex items-center justify-center overflow-hidden">
       <canvas ref={canvasRef} className="absolute inset-0 pointer-events-none" />
 
+      {/* Parallax decorative blobs */}
       <motion.div
-        initial={{ opacity: 0, y: 30 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
+        animate={{ y: [0, -15, 0] }}
+        transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+        className="absolute top-20 left-10 w-48 h-48 bg-rose/5 rounded-full blur-3xl pointer-events-none"
+      />
+      <motion.div
+        animate={{ y: [0, 10, 0] }}
+        transition={{ duration: 7, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+        className="absolute bottom-20 right-10 w-56 h-56 bg-gold/5 rounded-full blur-3xl pointer-events-none"
+      />
+
+      <motion.div
+        variants={formVariants}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: "-60px" }}
         className="relative z-10 w-full max-w-2xl bg-white/40 backdrop-blur-xl border border-white/60 p-8 md:p-12 rounded-[3rem] shadow-xl"
       >
-        <div className="text-center mb-12">
-          <h2 className="font-serif text-5xl text-neutral-800 mb-4">Will You Attend?</h2>
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, delay: 0.1 }}
+          className="text-center mb-12"
+        >
+          <h2 className="font-serif text-4xl md:text-5xl text-neutral-800 mb-4">Will You Attend?</h2>
           <p className="font-sans text-neutral-500 uppercase tracking-widest text-xs">Kindly respond by November 1st, 2026</p>
-        </div>
+        </motion.div>
 
         <form onSubmit={handleSubmit} className="space-y-6">
-          <div>
+          <motion.div
+            custom={0}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            variants={fieldVariants}
+          >
             <label className="block font-sans text-xs uppercase tracking-widest text-neutral-400 mb-2 ml-4">Full Name</label>
             <input
               type="text"
               required
-              className="w-full bg-white/50 border border-neutral-100 rounded-2xl px-6 py-4 outline-none focus:border-rose transition-colors duration-300 font-sans"
+              className="w-full bg-white/50 border border-neutral-100 rounded-2xl px-6 py-4 outline-none focus:border-rose focus:shadow-lg focus:shadow-rose/5 transition-all duration-300 font-sans"
               placeholder="Your Name"
               value={form.name}
               onChange={(e) => setForm({ ...form, name: e.target.value })}
             />
-          </div>
+          </motion.div>
 
           <div className="grid grid-cols-2 gap-4">
-            <div>
+            <motion.div
+              custom={1}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              variants={fieldVariants}
+            >
               <label className="block font-sans text-xs uppercase tracking-widest text-neutral-400 mb-2 ml-4">Attendance</label>
               <select
-                className="w-full bg-white/50 border border-neutral-100 rounded-2xl px-6 py-4 outline-none focus:border-rose transition-colors duration-300 font-sans appearance-none"
+                className="w-full bg-white/50 border border-neutral-100 rounded-2xl px-6 py-4 outline-none focus:border-rose focus:shadow-lg focus:shadow-rose/5 transition-all duration-300 font-sans appearance-none"
                 value={form.attendance}
                 onChange={(e) => setForm({ ...form, attendance: e.target.value })}
               >
                 <option value="yes">Accept with pleasure</option>
                 <option value="no">Decline with regret</option>
               </select>
-            </div>
-            <div>
+            </motion.div>
+            <motion.div
+              custom={2}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              variants={fieldVariants}
+            >
               <label className="block font-sans text-xs uppercase tracking-widest text-neutral-400 mb-2 ml-4">Guests</label>
               <select
-                className="w-full bg-white/50 border border-neutral-100 rounded-2xl px-6 py-4 outline-none focus:border-rose transition-colors duration-300 font-sans appearance-none"
+                className="w-full bg-white/50 border border-neutral-100 rounded-2xl px-6 py-4 outline-none focus:border-rose focus:shadow-lg focus:shadow-rose/5 transition-all duration-300 font-sans appearance-none"
                 value={form.guests}
                 onChange={(e) => setForm({ ...form, guests: e.target.value })}
               >
                 <option value="1">1 Person</option>
                 <option value="2">2 Persons</option>
               </select>
-            </div>
+            </motion.div>
           </div>
 
-          <div>
+          <motion.div
+            custom={3}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            variants={fieldVariants}
+          >
             <label className="block font-sans text-xs uppercase tracking-widest text-neutral-400 mb-2 ml-4">Message for the Couple</label>
             <textarea
               rows={4}
-              className="w-full bg-white/50 border border-neutral-100 rounded-2xl px-6 py-4 outline-none focus:border-rose transition-colors duration-300 font-sans resize-none"
+              className="w-full bg-white/50 border border-neutral-100 rounded-2xl px-6 py-4 outline-none focus:border-rose focus:shadow-lg focus:shadow-rose/5 transition-all duration-300 font-sans resize-none"
               placeholder="Write your wishes..."
               value={form.message}
               onChange={(e) => setForm({ ...form, message: e.target.value })}
             />
-          </div>
+          </motion.div>
 
-          <motion.button
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
-            className="w-full bg-neutral-800 text-white py-5 rounded-2xl font-sans uppercase tracking-[0.3em] text-sm hover:bg-rose transition-colors duration-500 shadow-lg shadow-neutral-800/10"
+          <motion.div
+            custom={4}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            variants={fieldVariants}
           >
-            Send Invitation
-          </motion.button>
+            <motion.button
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+              className="w-full bg-neutral-800 text-white py-5 rounded-2xl font-sans uppercase tracking-[0.3em] text-sm hover:bg-rose transition-colors duration-500 shadow-lg shadow-neutral-800/10"
+            >
+              Send Invitation
+            </motion.button>
+          </motion.div>
         </form>
       </motion.div>
     </section>
