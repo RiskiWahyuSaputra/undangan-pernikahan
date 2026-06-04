@@ -21,7 +21,7 @@ const Navbar = () => {
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
-            className="font-serif text-3xl text-neutral-800 tracking-tighter"
+            className="font-serif text-white text-3xl text-neutral-800 tracking-tighter"
           >
             R&L
           </motion.div>
@@ -32,11 +32,14 @@ const Navbar = () => {
             onClick={() => setIsOpen(true)}
             className="flex items-center gap-3 group"
           >
-            <span className="font-sans text-xs uppercase tracking-[0.3em] text-neutral-500 group-hover:text-rose transition-colors duration-300">
+            <span className="font-sans text-white text-xs uppercase tracking-[0.3em] text-neutral-500 group-hover:text-rose transition-colors duration-300">
               Menu
             </span>
             <div className="w-10 h-10 rounded-full bg-white/50 backdrop-blur-md border border-white/20 flex items-center justify-center group-hover:bg-rose group-hover:border-rose transition-all duration-300">
-              <Menu size={20} className="text-neutral-800 group-hover:text-white transition-colors duration-300" />
+              <Menu
+                size={20}
+                className="text-neutral-800 group-hover:text-white transition-colors duration-300"
+              />
             </div>
           </button>
         </div>
