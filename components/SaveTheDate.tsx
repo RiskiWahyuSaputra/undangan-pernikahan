@@ -155,43 +155,63 @@ const SaveTheDate = () => {
             </p>
           </motion.div>
 
-          {/* Venue Card */}
+          {/* Venue Card — with embedded map */}
           <motion.div
             variants={cardVariants}
-            className="md:col-span-3 md:row-span-1 bg-white/60 backdrop-blur-xl border border-white/40 rounded-3xl md:rounded-[2.5rem] p-8 md:p-12 flex flex-col md:flex-row items-start justify-between relative overflow-hidden group hover:bg-white/80 transition-all duration-500 shadow-sm hover:shadow-lg"
+            className="md:col-span-3 md:row-span-1 bg-white/60 backdrop-blur-xl border border-white/40 rounded-3xl md:rounded-[2.5rem] overflow-hidden group hover:bg-white/80 transition-all duration-500 shadow-sm hover:shadow-lg"
           >
-            <div className="relative z-10 w-full md:w-auto">
-              <div className="flex items-center gap-2 md:gap-3 mb-3 md:mb-4">
-                <MapPin className="text-rose w-5 h-5 md:w-8 md:h-8 group-hover:scale-110 transition-transform duration-500" />
-                <span className="font-sans text-[9px] md:text-xs uppercase tracking-[0.3em] text-rose font-medium">
-                  Venue
-                </span>
+            <div className="flex flex-col md:flex-row h-full">
+              {/* Venue Info */}
+              <div className="p-8 md:p-12 flex flex-col justify-between flex-1 min-w-0">
+                <div>
+                  <div className="flex items-center gap-2 md:gap-3 mb-3 md:mb-4">
+                    <MapPin className="text-rose w-5 h-5 md:w-8 md:h-8 group-hover:scale-110 transition-transform duration-500" />
+                    <span className="font-sans text-[9px] md:text-xs uppercase tracking-[0.3em] text-rose font-medium">
+                      Venue
+                    </span>
+                  </div>
+                  <h3 className="font-serif text-2xl md:text-4xl lg:text-5xl text-neutral-800 mb-2 md:mb-3">
+                    Amanjiwo Resort
+                  </h3>
+                  <p className="font-sans text-xs md:text-base text-neutral-500 max-w-md leading-relaxed">
+                    Ds. Majaksingi, Borobudur, Magelang
+                  </p>
+                  <p className="font-sans text-xs md:text-base text-neutral-500 max-w-md">
+                    Central Java, Indonesia
+                  </p>
+                </div>
+
+                <a
+                  href="https://maps.google.com/maps?q=Amanjiwo+Resort+Borobudur+Magelang"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group/btn relative inline-flex items-center gap-2 px-6 md:px-8 py-3 md:py-4 bg-neutral-800 text-white rounded-full font-sans tracking-widest text-[10px] md:text-sm hover:bg-rose transition-all duration-500 uppercase font-medium overflow-hidden w-full md:w-auto justify-center mt-6 md:mt-10"
+                >
+                  <span className="relative z-10">Open Maps</span>
+                  <ChevronRight
+                    size={14}
+                    className="relative z-10 group-hover/btn:translate-x-1 transition-transform duration-300"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-r from-rose to-rose/80 opacity-0 group-hover/btn:opacity-100 transition-opacity duration-500" />
+                </a>
               </div>
-              <h3 className="font-serif text-2xl md:text-4xl lg:text-5xl text-neutral-800 mb-2 md:mb-3">
-                Amanjiwo Resort
-              </h3>
-              <p className="font-sans text-xs md:text-base text-neutral-500 max-w-xl leading-relaxed">
-                Ds. Majaksingi, Borobudur, Magelang
-              </p>
-              <p className="font-sans text-xs md:text-base text-neutral-500 max-w-xl">
-                Central Java, Indonesia
-              </p>
-            </div>
 
-            <div className="relative z-10 mt-6 md:mt-0 flex-shrink-0 self-stretch md:self-auto flex items-start md:items-center">
-              <button className="group/btn relative inline-flex items-center gap-2 px-6 md:px-8 py-3 md:py-4 bg-neutral-800 text-white rounded-full font-sans tracking-widest text-[10px] md:text-sm hover:bg-rose transition-all duration-500 uppercase font-medium overflow-hidden w-full md:w-auto justify-center">
-                <span className="relative z-10">Open Maps</span>
-                <ChevronRight
-                  size={14}
-                  className="relative z-10 group-hover/btn:translate-x-1 transition-transform duration-300"
+              {/* Map */}
+              <div className="relative w-full md:w-[300px] lg:w-[400px] h-56 md:h-auto flex-shrink-0 overflow-hidden">
+                <iframe
+                  src="https://maps.google.com/maps?q=Amanjiwo+Resort+Borobudur+Magelang&output=embed&z=15"
+                  className="absolute inset-0 w-full h-full"
+                  style={{ border: 0 }}
+                  allowFullScreen
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                  title="Amanjiwo Resort Location"
                 />
-                <div className="absolute inset-0 bg-gradient-to-r from-rose to-rose/80 opacity-0 group-hover/btn:opacity-100 transition-opacity duration-500" />
-              </button>
+                {/* Gradient overlay on map edge */}
+                <div className="absolute top-0 left-0 w-full h-8 bg-gradient-to-b from-white/60 to-transparent pointer-events-none md:hidden" />
+                <div className="absolute top-0 left-0 w-8 h-full bg-gradient-to-r from-white/60 to-transparent pointer-events-none hidden md:block" />
+              </div>
             </div>
-
-            {/* Decorative elements */}
-            <div className="absolute -right-12 md:-right-16 -bottom-12 md:-bottom-16 w-36 md:w-48 h-36 md:h-48 bg-rose/5 rounded-full blur-2xl group-hover:bg-rose/10 transition-colors duration-500 pointer-events-none" />
-            <div className="absolute -right-4 md:-right-8 -bottom-4 md:-bottom-8 w-16 md:w-24 h-16 md:h-24 bg-gold/5 rounded-full blur-xl pointer-events-none" />
           </motion.div>
         </motion.div>
       </div>
