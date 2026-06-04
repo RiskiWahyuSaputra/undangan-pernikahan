@@ -1,7 +1,7 @@
 "use client";
 
-import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
-import { useEffect, useState, useRef } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { useEffect, useState } from "react";
 import { Quote, Heart } from "lucide-react";
 
 const wishes = [
@@ -28,17 +28,7 @@ const wishes = [
 ];
 
 const Wishes = () => {
-  const sectionRef = useRef<HTMLDivElement>(null);
   const [index, setIndex] = useState(0);
-
-  const { scrollYProgress } = useScroll({
-    target: sectionRef,
-    offset: ["start end", "end start"],
-  });
-
-  const bgTextY = useTransform(scrollYProgress, [0, 1], [80, -80]);
-  const bgTextScale = useTransform(scrollYProgress, [0, 0.5, 1], [0.8, 1, 0.8]);
-  const bgTextOpacity = useTransform(scrollYProgress, [0, 0.3, 0.7, 1], [0.3, 0.6, 0.6, 0.3]);
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -48,35 +38,13 @@ const Wishes = () => {
   }, []);
 
   return (
-    <section
-      ref={sectionRef}
-      className="bg-neutral-900 h-screen flex items-center justify-center px-6 relative overflow-hidden"
-    >
-      {/* Decorative background elements */}
-      <motion.div
-        style={{ y: bgTextY, scale: bgTextScale, opacity: bgTextOpacity }}
-        className="absolute inset-0 flex items-center justify-center pointer-events-none"
-      >
-        <span className="font-serif text-[20vw] text-white/[0.02] select-none uppercase tracking-tighter">
+    <section className="bg-neutral-900 h-screen flex items-center justify-center px-6 relative overflow-hidden">
+      {/* Static background text */}
+      <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+        <span className="font-serif text-[20vw] text-white/[0.03] select-none uppercase tracking-tighter">
           Love Story
         </span>
-      </motion.div>
-
-      {/* Floating hearts */}
-      <motion.div
-        animate={{ y: [0, -10, 0], rotate: [0, 5, 0] }}
-        transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-        className="absolute top-16 left-12 md:left-24 text-gold/10 pointer-events-none"
-      >
-        <Heart size={48} />
-      </motion.div>
-      <motion.div
-        animate={{ y: [0, 8, 0], rotate: [0, -5, 0] }}
-        transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-        className="absolute bottom-24 right-16 md:right-32 text-rose/10 pointer-events-none"
-      >
-        <Heart size={36} />
-      </motion.div>
+      </div>
 
       <div className="max-w-5xl w-full relative z-10">
         <div className="text-center mb-16">

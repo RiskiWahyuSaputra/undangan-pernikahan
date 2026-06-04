@@ -1,10 +1,9 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
-import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
+import { useState, useEffect } from "react";
+import { motion } from "framer-motion";
 
 const Countdown = () => {
-  const sectionRef = useRef<HTMLDivElement>(null);
   const targetDate = new Date("2026-12-12T09:00:00").getTime();
   const [timeLeft, setTimeLeft] = useState({
     days: 0,
@@ -12,15 +11,6 @@ const Countdown = () => {
     minutes: 0,
     seconds: 0,
   });
-
-  const { scrollYProgress } = useScroll({
-    target: sectionRef,
-    offset: ["start end", "end start"],
-  });
-
-  const blob1Y = useTransform(scrollYProgress, [0, 1], [60, -60]);
-  const blob2Y = useTransform(scrollYProgress, [0, 1], [-40, 40]);
-  const blob3Y = useTransform(scrollYProgress, [0, 1], [80, -30]);
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -61,24 +51,7 @@ const Countdown = () => {
   };
 
   return (
-    <section
-      ref={sectionRef}
-      className="bg-ivory py-32 px-6 flex flex-col items-center relative overflow-hidden"
-    >
-      {/* Parallax decorative blobs */}
-      <motion.div
-        style={{ y: blob1Y }}
-        className="absolute top-20 right-10 w-64 h-64 bg-rose/5 rounded-full blur-3xl pointer-events-none"
-      />
-      <motion.div
-        style={{ y: blob2Y }}
-        className="absolute bottom-20 left-10 w-48 h-48 bg-sage/5 rounded-full blur-3xl pointer-events-none"
-      />
-      <motion.div
-        style={{ y: blob3Y }}
-        className="absolute top-1/2 right-1/3 w-32 h-32 bg-gold/5 rounded-full blur-2xl pointer-events-none"
-      />
-
+    <section className="bg-ivory py-32 px-6 flex flex-col items-center relative overflow-hidden">
       <motion.div
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -105,7 +78,7 @@ const Countdown = () => {
             variants={cardVariants}
             className="flex flex-col items-center"
           >
-            <div className="relative w-16 md:w-32 h-20 md:h-40 bg-white/70 backdrop-blur-sm shadow-sm rounded-2xl flex items-center justify-center overflow-hidden border border-white/60 group hover:shadow-md transition-shadow duration-500">
+            <div className="relative w-16 md:w-32 h-20 md:h-40 bg-white/70 shadow-sm rounded-2xl flex items-center justify-center overflow-hidden border border-white/60 group hover:shadow-md transition-shadow duration-500">
               <span className="font-serif text-4xl md:text-7xl text-neutral-800">
                 {String(unit.value).padStart(2, "0")}
               </span>

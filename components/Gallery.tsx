@@ -133,11 +133,12 @@ const Gallery = () => {
                   src={img.src}
                   alt={img.alt}
                   loading="lazy"
+                  decoding="async"
                   className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                 />
               </div>
-              {/* Hover overlay */}
-              <div className="absolute inset-0 z-20 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+              {/* Hover overlay — desktop only */}
+              <div className="absolute inset-0 z-20 hidden md:flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-500">
                 <div className="w-12 h-12 md:w-16 md:h-16 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center">
                   <Camera className="text-white w-5 h-5 md:w-6 md:h-6" />
                 </div>
@@ -158,13 +159,13 @@ const Gallery = () => {
             role="dialog"
             aria-modal="true"
             aria-label="Photo lightbox"
-            className="fixed inset-0 z-[200] bg-black/90 backdrop-blur-xl flex items-center justify-center p-4 md:p-10"
+            className="fixed inset-0 z-[200] bg-black/95 flex items-center justify-center p-4 md:p-10"
             onClick={closeLightbox}
           >
             {/* Close button */}
             <button
               onClick={closeLightbox}
-              className="absolute top-6 right-6 md:top-10 md:right-10 w-12 h-12 rounded-full bg-white/10 hover:bg-white/20 backdrop-blur-md flex items-center justify-center transition-all duration-300 z-10 group"
+              className="absolute top-6 right-6 md:top-10 md:right-10 w-12 h-12 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center transition-all duration-300 z-10 group"
             >
               <X className="text-white w-5 h-5 group-hover:scale-110 transition-transform duration-300" />
             </button>
@@ -180,7 +181,7 @@ const Gallery = () => {
                 e.stopPropagation();
                 goPrev();
               }}
-              className="absolute left-4 md:left-10 top-1/2 -translate-y-1/2 w-10 h-10 md:w-14 md:h-14 rounded-full bg-white/10 hover:bg-white/20 backdrop-blur-md flex items-center justify-center transition-all duration-300 group"
+              className="absolute left-4 md:left-10 top-1/2 -translate-y-1/2 w-10 h-10 md:w-14 md:h-14 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center transition-all duration-300 group"
             >
               <ChevronLeft className="text-white w-5 h-5 md:w-6 md:h-6 group-hover:-translate-x-0.5 transition-transform duration-300" />
             </button>
@@ -208,7 +209,7 @@ const Gallery = () => {
                 e.stopPropagation();
                 goNext();
               }}
-              className="absolute right-4 md:right-10 top-1/2 -translate-y-1/2 w-10 h-10 md:w-14 md:h-14 rounded-full bg-white/10 hover:bg-white/20 backdrop-blur-md flex items-center justify-center transition-all duration-300 group"
+              className="absolute right-4 md:right-10 top-1/2 -translate-y-1/2 w-10 h-10 md:w-14 md:h-14 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center transition-all duration-300 group"
             >
               <ChevronRight className="text-white w-5 h-5 md:w-6 md:h-6 group-hover:translate-x-0.5 transition-transform duration-300" />
             </button>

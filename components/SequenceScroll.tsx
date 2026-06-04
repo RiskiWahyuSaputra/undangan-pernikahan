@@ -4,20 +4,31 @@ import React, { useEffect, useRef, useState } from "react";
 import { useScroll, useTransform, useMotionValueEvent, motion } from "framer-motion";
 
 const TOTAL_FRAMES = 242;
+const MOBILE_TOTAL_FRAMES = 60;
 
 export default function SequenceScroll({ onLoad }: { onLoad?: () => void }) {
   const containerRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const imagesRef = useRef<HTMLImageElement[]>([]);
   const [imagesLoaded, setImagesLoaded] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 768);
+    check();
+    window.addEventListener("resize", check);
+    return () => window.removeEventListener("resize", check);
+  }, []);
+
+  const totalFrames = isMobile ? MOBILE_TOTAL_FRAMES : TOTAL_FRAMES;
 
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start start", "end end"],
   });
 
-  // Map scroll progress (0-1) to frame index (1-242)
-  const frameIndex = useTransform(scrollYProgress, [0, 1], [1, TOTAL_FRAMES]);
+  // Map scroll progress (0-1) to frame index
+  const frameIndex = useTransform(scrollYProgress, [0, 1], [1, totalFrames]);
 
   // Text Overlay Animations
   const opacity1 = useTransform(scrollYProgress, [0, 0.05, 0.15, 0.2], [0, 1, 1, 0]);
@@ -33,14 +44,15 @@ export default function SequenceScroll({ onLoad }: { onLoad?: () => void }) {
   useEffect(() => {
     let loadedCount = 0;
     const images: HTMLImageElement[] = [];
+    const framesToLoad = isMobile ? MOBILE_TOTAL_FRAMES : TOTAL_FRAMES;
 
-    for (let i = 1; i <= TOTAL_FRAMES; i++) {
+    for (let i = 1; i <= framesToLoad; i++) {
       const img = new Image();
       const frameNumber = i.toString().padStart(3, "0");
       img.src = `/sequence/ezgif-frame-${frameNumber}.jpg`;
       img.onload = img.onerror = () => {
         loadedCount++;
-        if (loadedCount === TOTAL_FRAMES) {
+        if (loadedCount === framesToLoad) {
           setImagesLoaded(true);
           onLoad?.();
         }
@@ -48,7 +60,7 @@ export default function SequenceScroll({ onLoad }: { onLoad?: () => void }) {
       images.push(img);
     }
     imagesRef.current = images;
-  }, []);
+  }, [isMobile]);
 
   const renderFrame = (index: number) => {
     const canvas = canvasRef.current;
@@ -87,7 +99,7 @@ export default function SequenceScroll({ onLoad }: { onLoad?: () => void }) {
   useEffect(() => {
     const handleResize = () => {
       if (canvasRef.current) {
-        const dpr = window.devicePixelRatio || 1;
+        const dpr = isMobile ? 1 : (window.devicePixelRatio || 1);
         canvasRef.current.width = window.innerWidth * dpr;
         canvasRef.current.height = window.innerHeight * dpr;
         if (imagesLoaded) {
@@ -100,7 +112,7 @@ export default function SequenceScroll({ onLoad }: { onLoad?: () => void }) {
     handleResize();
 
     return () => window.removeEventListener("resize", handleResize);
-  }, [imagesLoaded, frameIndex]);
+  }, [imagesLoaded, frameIndex, isMobile]);
 
   return (
     <div ref={containerRef} className="relative h-[500vh] w-full">

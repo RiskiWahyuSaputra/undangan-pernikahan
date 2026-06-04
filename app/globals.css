@@ -5,15 +5,46 @@
 @layer base {
   html {
     scroll-behavior: auto;
+    -webkit-tap-highlight-color: transparent;
   }
   body {
     @apply bg-ivory text-neutral-900 antialiased;
     overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
   }
 }
 
 @layer utilities {
   .text-balance {
     text-wrap: balance;
+  }
+}
+
+/* GPU acceleration for animated elements */
+.will-change-transform {
+  will-change: transform;
+  transform: translateZ(0);
+}
+
+.will-change-contents {
+  will-change: contents;
+}
+
+/* Reduce motion for users who prefer it */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Mobile: disable heavy effects */
+@media (max-width: 767px) {
+  .backdrop-blur-xl,
+  .backdrop-blur-md,
+  .backdrop-blur-sm {
+    backdrop-filter: none !important;
   }
 }
