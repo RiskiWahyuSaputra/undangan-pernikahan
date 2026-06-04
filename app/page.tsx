@@ -7,6 +7,7 @@ import SequenceScroll from "@/components/SequenceScroll";
 import Story from "@/components/Story";
 import SaveTheDate from "@/components/SaveTheDate";
 import Countdown from "@/components/Countdown";
+import Gallery from "@/components/Gallery";
 import Wishes from "@/components/Wishes";
 import RSVP from "@/components/RSVP";
 import Footer from "@/components/Footer";
@@ -30,6 +31,10 @@ export default function Home() {
       </div>
       
       <Countdown />
+      
+      <div id="gallery">
+        <Gallery />
+      </div>
       
       <Wishes />
       
