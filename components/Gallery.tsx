@@ -5,14 +5,14 @@ import { motion, AnimatePresence } from "framer-motion";
 import { X, ChevronLeft, ChevronRight, Camera } from "lucide-react";
 
 const galleryImages = [
-  { src: "https://picsum.photos/seed/wedding1/800/1000", alt: "Prewedding Photo 1", tall: true },
-  { src: "https://picsum.photos/seed/wedding2/800/600", alt: "Prewedding Photo 2", tall: false },
-  { src: "https://picsum.photos/seed/wedding3/800/700", alt: "Prewedding Photo 3", tall: false },
-  { src: "https://picsum.photos/seed/wedding4/800/800", alt: "Prewedding Photo 4", tall: false },
-  { src: "https://picsum.photos/seed/wedding5/800/500", alt: "Prewedding Photo 5", tall: false },
-  { src: "https://picsum.photos/seed/wedding6/800/900", alt: "Prewedding Photo 6", tall: true },
-  { src: "https://picsum.photos/seed/wedding7/800/600", alt: "Prewedding Photo 7", tall: false },
-  { src: "https://picsum.photos/seed/wedding8/800/650", alt: "Prewedding Photo 8", tall: false },
+  { src: "https://images.unsplash.com/photo-1519741497674-611481863552?w=800&h=1000&fit=crop", alt: "Wedding ceremony moment", tall: true },
+  { src: "https://images.unsplash.com/photo-1606216794074-735e91aa2c92?w=800&h=600&fit=crop", alt: "Bridal portrait", tall: false },
+  { src: "https://images.unsplash.com/photo-1583939003579-730e3918a45a?w=800&h=700&fit=crop", alt: "Wedding rings close-up", tall: false },
+  { src: "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?w=800&h=800&fit=crop", alt: "Couple walking together", tall: false },
+  { src: "https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?w=800&h=500&fit=crop", alt: "Wedding reception", tall: false },
+  { src: "https://images.unsplash.com/photo-1522673607200-164d1b6ce486?w=800&h=900&fit=crop", alt: "Romantic couple portrait", tall: true },
+  { src: "https://images.unsplash.com/photo-1520854221256-17451cc331bf?w=800&h=600&fit=crop", alt: "Wedding bouquet detail", tall: false },
+  { src: "https://images.unsplash.com/photo-1529636798458-92182e662485?w=800&h=650&fit=crop", alt: "First dance moment", tall: false },
 ];
 
 const containerVariants = {
